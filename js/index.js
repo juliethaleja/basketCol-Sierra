@@ -1,9 +1,11 @@
+
 let nom_User = prompt("¡Bienvenido a BasketCol, por favor ingresa tu nombre.!");
 class Marca {
   constructor(tipo) {
     this.tipo = tipo;
   }
 }
+
 
 const Jordan = new Marca("Jordan");
 const Under_Armour = new Marca("Under Armour");
@@ -31,36 +33,10 @@ const talla4 = new Producto("Zapatos (Baloncesto) talla 10", 175.0);
 const talla5 = new Producto("Zapatos (Baloncesto) talla 12", 250.0);
 const talla6 = new Producto("Zapatos (Baloncesto) talla 14", 300.0);
 const talla7 = new Producto("Zapatos (Baloncesto) talla 16", 265.0);
-
-if (marca_user > 0 && marca_user <= 4) {
-  console.log(
-    `Hola ${nom_User}, seleccionaste la marca  ${
-      MarcaElegida[marca_user - 1].tipo
-    }`
-  );
-} else {
-  let despedida = alert(
-    `Gracias por visitarnos  ${nom_User}, espero volvernos a ver pronto `
-  );
-}
-let ProductCompra = prompt(
-  `Hola ${nom_User} ,estos son los productos que ofrecemos de la marca ${
-    MarcaElegida[marca_user - 1].tipo
-  } :
-         1. ${talla1.talla} con un costo de ${talla1.precio}
-         2. ${talla2.talla} con un costo de ${talla2.precio}
-         3. ${talla3.talla} con un costo de ${talla3.precio}
-         4. ${talla4.talla} con un costo de ${talla4.precio}
-         5. ${talla5.talla} con un costo de ${talla5.precio}
-         6. ${talla6.talla} con un costo de ${talla6.precio}
-         7. ${talla7.talla} con un costo de ${talla7.precio}
-         8. Salir`
-);
 function filtro() {
   if (marca_user > 0 && marca_user <= 4) {
     console.log(
-      `Hola ${nom_User}, seleccionaste la marca  ${
-        MarcaElegida[marca_user - 1].tipo
+      `Hola ${nom_User}, seleccionaste la marca  ${MarcaElegida[marca_user - 1].tipo
       }`
     );
   } else {
@@ -68,10 +44,67 @@ function filtro() {
       `Gracias por visitarnos  ${nom_User}, espero volvernos a ver pronto `
     );
   }
+}
+filtro();
+let ordenar_por = prompt(
+  `Hola ${nom_User} ,deseas ordenar los productos,por favor selecciona:
+         1. Si
+         2. No`
+);
+
+let ProductCompra;
+let ProductElegida = [talla1, talla2, talla3, talla4, talla5, talla6, talla7];
+let total = 0;
+let totalCuotas = 0;
+let TipoPago;
+if (ordenar_por === '1') {
+  let metodo = prompt(
+    `${nom_User}, selecciona el metodo de ordenamiento:
+      1. Menor a mayor
+      2. Mayor a menor a menor
+      3. Salir`);
+  while (metodo != 3) {
+    if (metodo === '1') {
+      ProductElegida.sort(function (a, b) {
+        return a.precio - b.precio;
+      });
+      for (let poduct of ProductElegida) {
+        console.log(` ${poduct.talla} con un costo de ${poduct.precio}`);
+
+      }
+    } else if (metodo === '2') {
+      ProductElegida.sort(function (a, b) {
+        return b.precio - a.precio;
+      });
+      for (let poduct of ProductElegida) {
+        console.log(` ${poduct.talla} con un costo de ${poduct.precio}`);
+      }
+    }
+    ProductCompra = prompt(
+      `Hola ${nom_User} ,estos son los productos que ofrecemos de la marca ${MarcaElegida[marca_user - 1].tipo
+      } :
+         1. ${talla1.talla} con un costo de ${talla1.precio}
+         2. ${talla2.talla} con un costo de ${talla2.precio}
+         3. ${talla3.talla} con un costo de ${talla3.precio}
+         4. ${talla4.talla} con un costo de ${talla4.precio}
+         5. ${talla5.talla} con un costo de ${talla5.precio}
+         6. ${talla6.talla} con un costo de ${talla6.precio}
+         7. ${talla7.talla} con un costo de ${talla7.precio}
+         8. Salir`
+    );
+    Compras();
+    TipoPago = parseInt(
+      prompt(`${nom_User}, indica que metodo de pago deseas usar:
+  1. Debito
+  2. Credito
+  3. Efectivo`)
+    );
+    tipo_pago();
+  }
+
+} else {
   ProductCompra = prompt(
-    `Hola ${nom_User} ,estos son los productos que ofrecemos de la marca ${
-      MarcaElegida[marca_user - 1].tipo
-    } :
+    `Hola ${nom_User} ,estos son los productos que ofrecemos de la marca ${MarcaElegida[marca_user - 1].tipo} :
          1. ${talla1.talla} con un costo de ${talla1.precio}
          2. ${talla2.talla} con un costo de ${talla2.precio}
          3. ${talla3.talla} con un costo de ${talla3.precio}
@@ -81,24 +114,26 @@ function filtro() {
          7. ${talla7.talla} con un costo de ${talla7.precio}
          8. Salir`
   );
+  Compras();
+  tipo_pago();
 }
 
-let ProductElegida = [talla1, talla2, talla3, talla4, talla5, talla6, talla7];
-let total = 0;
+
+
+
+
 function Compras() {
   while (ProductCompra != 8) {
     if (ProductCompra > 0 && ProductCompra <= 7) {
       console.log(
-        `hola ${nom_User} hola tu producto elegido es ${
-          ProductElegida[ProductCompra - 1].talla
+        `hola ${nom_User} hola tu producto elegido es ${ProductElegida[ProductCompra - 1].talla
         } 
           con un costo de ${ProductElegida[ProductCompra - 1].precio} `
       );
       total += ProductElegida[ProductCompra - 1].precio;
 
       ProductCompra = prompt(
-        `Hola ${nom_User} ,estos son los productos que ofrecemos de la marca ${
-          MarcaElegida[marca_user - 1].tipo
+        `Hola ${nom_User} ,estos son los productos que ofrecemos de la marca ${MarcaElegida[marca_user - 1].tipo
         } :
                1. ${talla1.talla} con un costo de ${talla1.precio} pesos
                2. ${talla2.talla} con un costo de ${talla2.precio} pesos
@@ -111,8 +146,7 @@ function Compras() {
       );
     } else {
       ProductCompra = prompt(
-        `Hola ${nom_User} ,Ingresa un numero que corresponda a la  marca ${
-          MarcaElegida[marca_user - 1].tipo
+        `Hola ${nom_User} ,Ingresa un numero que corresponda a la  marca ${MarcaElegida[marca_user - 1].tipo
         } :
                    1. ${talla1.talla} con un costo de ${talla1.precio}
                    2. ${talla2.talla} con un costo de ${talla2.precio}
@@ -127,16 +161,9 @@ function Compras() {
   }
   console.log(`${nom_User}, el total de compra es ${total}`);
 }
-Compras();
-let totalCuotas = 0;
-let TipoPago = parseInt(
-  prompt(`${nom_User}, indica que metodo de pago deseas usar:
-  1. Debito
-  2. Credito
-  3. Efectivo`)
-);
+
 function tipo_pago() {
-  while (  TipoPago < 3 ||  TipoPago >= 1 ||  TipoPago != "" ||  TipoPago === "efectivo") {
+  while (TipoPago < 3 || TipoPago >= 1 || TipoPago != "" || TipoPago === "efectivo") {
     if (TipoPago === 3) {
       alert(`${nom_User}, el total a pagar es de ${total} pesos en efectivo,muchas gracias por su compra.
   vuelve pronto.`);
@@ -172,5 +199,4 @@ function tipo_pago() {
     }
   }
 }
-tipo_pago();
 
