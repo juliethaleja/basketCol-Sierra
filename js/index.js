@@ -1,4 +1,4 @@
-/* 
+
 let nom_User = prompt("¡Bienvenido a BasketCol, por favor ingresa tu nombre.!");
 class Marca {
   constructor(tipo) {
@@ -181,7 +181,7 @@ function tipo_pago() {
       );
     }
   }
-} */
+} 
 let base=document.getElementById("base");
 let class_nike = document.getElementsByClassName("nike");
 let class_adidas = document.getElementsByClassName("adidas");
