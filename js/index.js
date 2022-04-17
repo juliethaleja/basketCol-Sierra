@@ -1,4 +1,4 @@
-
+/* 
 let nom_User = prompt("¡Bienvenido a BasketCol, por favor ingresa tu nombre.!");
 class Marca {
   constructor(tipo) {
@@ -181,5 +181,71 @@ function tipo_pago() {
       );
     }
   }
-}
-
+} */
+let base=document.getElementById("base");
+let class_nike = document.getElementsByClassName("nike");
+let class_adidas = document.getElementsByClassName("adidas");
+let class_unam = document.getElementsByClassName("unam");
+let class_jordan = document.getElementsByClassName("jordan");
+let jordan = document.getElementById("jordan");
+jordan.onclick = () => {
+  
+  for (var i = 0; i < class_nike.length; i++) {
+class_nike[i].style.display='none'
+ }
+  for (var i = 0; i < class_adidas.length; i++) {
+    class_adidas[i].style.display='none'
+ }
+  for (var i = 0; i < class_unam.length; i++) {
+    class_unam[i].style.display='none'
+ }
+   for (var i = 0; i < class_jordan.length; i++) {
+    
+    base.appendChild(class_jordan[i]);  
+  }
+};
+let nike=document.getElementById("nike");
+nike.onclick = () => {
+  for (var i = 0; i < class_jordan.length; i++) {
+    class_jordan[i].style.display='none'
+ }
+  for (var i = 0; i < class_adidas.length; i++) {
+    class_adidas[i].style.display='none'
+ }
+  for (var i = 0; i < class_unam.length; i++) {
+    class_unam[i].style.display='none'
+ }
+   for (var i = 0; i < class_jordan.length; i++) {
+    base.appendChild(class_nike[i]);  
+  }
+};
+let adidas=document.getElementById("adidas");
+adidas.onclick = () => {
+  for (var i = 0; i < class_jordan.length; i++) {
+    class_jordan[i].style.display='none'
+ }
+  for (var i = 0; i < class_nike.length; i++) {
+    class_nike[i].style.display='none'
+ }
+  for (var i = 0; i < class_unam.length; i++) {
+    class_unam[i].style.display='none'
+ }
+   for (var i = 0; i < class_adidas.length; i++) {
+    base.appendChild(class_adidas[i]);  
+  }
+};
+let umna=document.getElementById("unam");
+umna.onclick = () => {
+  for (var i = 0; i < class_jordan.length; i++) {
+    class_jordan[i].style.display='none'
+ }
+  for (var i = 0; i < class_nike.length; i++) {
+    class_nike[i].style.display='none'
+ }
+  for (var i = 0; i < class_adidas.length; i++) {
+    class_adidas[i].style.display='none'
+ }
+   for (var i = 0; i < class_unam.length; i++) {
+    base.appendChild(class_unam[i]);  
+  }
+};
