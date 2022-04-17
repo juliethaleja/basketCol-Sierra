@@ -1,4 +1,5 @@
 /* 
+
 let nom_User = prompt("¡Bienvenido a BasketCol, por favor ingresa tu nombre.!");
 class Marca {
   constructor(tipo) {
