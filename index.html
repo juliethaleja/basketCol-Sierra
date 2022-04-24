@@ -10,31 +10,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 
 <body>
   <header>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="logo" href="index.html">
-          <img src="img/logo.png" />
+    <nav class="header navbar navbar-expand-lg shadow navbar-dark fixed-top menu p-2">
+      <div class="container-fluid">
+        <a href="index.html">
+          <img class="logo" src="img/logo.png" />
         </a>
-
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <i class="fas fa-shopping-cart"></i> </a>
-            </div>
-          </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav ">
+            <li class="nav-item px-lg-2">
+              <a class=" ">
+                <i class="fas fa-shopping-cart is-primary"></i> </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -148,250 +145,14 @@
               </div>
             </div>
           </div>
-          <div class="column is-12" > 
-            <div class="columns" id="base">
-              <div class="adidas column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/ADIDAS1.png" alt="adidas1">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Tenis OwnTheGame</p>
-                        <p class="subtitle is-8">$339.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Adidas</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class=" jordan column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/JORDAN1.png" alt="adidas1">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Air Jordan 7 Retro SE</p>
-                        <p class="subtitle is-8">$784.000</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Jordan</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="nike column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/NIKE 1.png" alt="adidas1">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title  is-7">Kyrie Infinity</p>
-                        <p class="subtitle is-8">$484.900</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Nike</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="unam column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/UNAM1.png" alt="adidas1">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Tenis de Basketball UA GS Lockdown 5 </p>
-                        <p class="subtitle is-8">$339.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Under Amuor</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="jordan column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/JORDAN2.png" alt="adidas1">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Air Jordan OG</p>
-                        <p class="subtitle is-8">$522.900</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Jordan</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="adidas column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/ADIDAS2.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Tenis Postmove Mid</p>
-                        <p class="subtitle is-8">$369.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Adidas</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> 
-            <div class="columns">
-              <div class="nike column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/NIKE2.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Nike Air Zoom G.T. Jump</p>
-                        <p class="subtitle is-8">$671.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Nike</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="adidas column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/ADIDAS3.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Tenis Cross Em Up 5 K Anchos</p>
-                        <p class="subtitle is-8">$279.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Adidas</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="unam column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/UNAM2.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7"> UA Jet '21 Unisex</p>
-                        <p class="subtitle is-8">$359.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Under Amour</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="columns">
-              <div class="jordan column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/JORDAN3.png" alt=" Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">Air Jordan XXXVI</p>
-                        <p class="subtitle is-8">$689.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Jordan</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="unam column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/UNAM3.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7">UA HOVR Havoc 3</p>
-                        <p class="subtitle is-8">$245.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Under Amour</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class=" nike column is-4">
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="img/NIKE3.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-7"> Zion 1</p>
-                        <p class="subtitle is-8">$313.990</p>
-                        <p class="is-8">Calzado de Baloncesto</p>
-                        <p class="is-8">Marca Nike</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="column is-12">
+            <div class="row" id="productos">
             </div>
           </div>
         </div>
       </div>
       </br>
     </div>
-
-
     </div>
   </section>
   <script src="js/index.js"></script>
