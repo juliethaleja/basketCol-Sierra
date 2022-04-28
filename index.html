@@ -26,12 +26,28 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav ">
-            <li class="nav-item px-lg-2">
-              <a class=" ">
-                <i class="fas fa-shopping-cart is-primary"></i> </a>
-            </li>
-          </ul>
+          <div class="two columns u-pull-right">
+            <ul>
+                <li class="submenu">
+                  <i class="fas fa-shopping-cart" id="img-carrito"></i>
+                        <div id="carrito">
+                          <table id="lista-carrito" class=" table is-striped
+                          u-full-width">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Talla</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                          <p class="text-left">Total: <span id="total"></span>$</p>
+                        </div>
+                </li>
+            </ul>
         </div>
       </div>
     </nav>

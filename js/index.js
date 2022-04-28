@@ -99,12 +99,18 @@ const producto = [
 ];
 const pesos = "$";
 const productos = document.querySelector("#productos");
+let carritoProducto = [];
+const carrito = document.querySelector("#carrito");
+const contenedorCarrito = document.querySelector("#lista-carrito tbody");
 
 //FUNCION PARA MOSTRAR PRODUCTOS EN CARDS
 function EstructuraProductos() {
   producto.forEach((info) => {
     //Estructura
     const estructura = document.createElement("div");
+    const espacio = document.createElement("br");
+    estructura.insertAdjacentElement("beforeend", espacio);
+
     estructura.classList.add("col-sm-4");
     // Card
     const card = document.createElement("div");
@@ -133,37 +139,23 @@ function EstructuraProductos() {
     const text_marca = document.createElement("p");
     text_marca.classList.add("is-8");
     text_marca.textContent = `Marca ${info.marca}`;
-    //Talla
-    const text_talla = document.createElement("div");
-    const select_talla = document.createElement("select");
-    let tallas = info.talla;
-    let select = `<select>
-                  <option>Talla</option>`;
-    tallas.forEach((value) => {
-      select += `<option value=${value}> ${value}</option>`;
-    });
-    select += `</select><br/>`;
-
-    select_talla.innerHTML = select;
-
-    text_talla.classList.add("select", "is-primary");
-    text_talla.insertAdjacentElement("beforeend", select_talla);
-
-    // Boton
+    //Direccion
+    const dir = document.createElement("a");
+     dir.setAttribute("href", "html/descripcion.html");
     // Boton
     const Agregar = document.createElement("button");
-    Agregar.classList.add("button", "is-primary","is-pulled-right");
-    Agregar.textContent = "+ agregar";
+    Agregar.classList.add("button", "is-primary", "is-pulled-right");
+    Agregar.textContent = "Detalles";
     Agregar.setAttribute("marcador", info.id);
-/*     Agregar.addEventListener("click", anyadirProductoAlCarrito);
- */
+    dir.appendChild(Agregar);
+    Agregar.addEventListener("click", obtener);
+
     // Insercion de los elmentos
     estructura.appendChild(card);
     CardBody.appendChild(CardTitle);
     CardBody.appendChild(text_precio);
     CardBody.appendChild(text_marca);
-    CardBody.appendChild(text_talla);
-    CardBody.appendChild(Agregar);
+    CardBody.appendChild(dir);
     card.appendChild(CardImagen);
     card.appendChild(CardBody);
     productos.appendChild(estructura);
@@ -171,19 +163,20 @@ function EstructuraProductos() {
 }
 EstructuraProductos();
 
-//FUNCION PARA FILTRAR POR MARCA
-function MarcaFiltrar(marca) {
+//FUNCION PARA FILTRAR 
+function Filtrar(clave) {
   let EliminarCard = Array.prototype.slice.call(
     document.getElementsByClassName("col-sm-4"),
-    0
   );
   for (Eliminar of EliminarCard) {
     Eliminar.remove();
   }
-  marca.forEach((info) => {
+  clave.forEach((info) => {
     //Estructura
     const estructura = document.createElement("div");
     estructura.classList.add("col-sm-4");
+    const espacio = document.createElement("br");
+    estructura.insertAdjacentElement("beforeend", espacio);
     // Card
     const card = document.createElement("div");
     card.classList.add("card");
@@ -211,109 +204,23 @@ function MarcaFiltrar(marca) {
     const text_marca = document.createElement("p");
     text_marca.classList.add("is-8");
     text_marca.textContent = `Marca ${info.marca}`;
-    //Talla
-    const text_talla = document.createElement("div");
-    const select_talla = document.createElement("select");
-    let tallas = info.talla;
-    let select = `<select>
-                  <option>Talla</option>`;
-    tallas.forEach((value) => {
-      select += `<option value=${value}> ${value}</option>`;
-    });
-    select += `</select><br/>`;
-
-    select_talla.innerHTML = select;
-
-    text_talla.classList.add("select", "is-primary");
-    text_talla.insertAdjacentElement("beforeend", select_talla);
+    //Direccion
+    const dir = document.createElement("a");
+     dir.setAttribute("href", "html/descripcion.html");
     // Boton
-    /*     const miNodoBoton = document.createElement('button');
-        miNodoBoton.classList.add('btn', 'btn-primary');
-        miNodoBoton.textContent = '+';
-        miNodoBoton.setAttribute('marcador', info.id);
-  miNodoBoton.addEventListener('click', anyadirProductoAlCarrito); */
+    const Agregar = document.createElement("button");
+    Agregar.classList.add("button", "is-primary", "is-pulled-right");
+    Agregar.textContent = "Detalles";
+    Agregar.setAttribute("marcador", info.id);
+    dir.appendChild(Agregar);
+    Agregar.addEventListener("click", obtener);
 
     // Insercion de los elmentos
     estructura.appendChild(card);
     CardBody.appendChild(CardTitle);
     CardBody.appendChild(text_precio);
     CardBody.appendChild(text_marca);
-    CardBody.appendChild(text_talla);
-    /*  CardBody.appendChild(miNodoBoton);*/
-    card.appendChild(CardImagen);
-    card.appendChild(CardBody);
-    productos.appendChild(estructura);
-  });
-}
-//FUNCION PARA FILTRAR POR TALLA
-function TallaFiltrar(talla) {
-  let EliminarCard = Array.prototype.slice.call(
-    document.getElementsByClassName("col-sm-4"),
-    0
-  );
-  for (Eliminar of EliminarCard) {
-    Eliminar.remove();
-  }
-  talla.forEach((info) => {
-    //Estructura
-    const estructura = document.createElement("div");
-    estructura.classList.add("col-sm-4");
-    // Card
-    const card = document.createElement("div");
-    card.classList.add("card");
-    // Body
-    const CardBody = document.createElement("div");
-    CardBody.classList.add("card-content");
-    // Titulo
-    const CardTitle = document.createElement("h5");
-    CardTitle.classList.add("title", "is-7");
-    CardTitle.textContent = info.modelo;
-    // Imagen
-    const CardImagen = document.createElement("div");
-    const CardFigure = document.createElement("figure");
-    const Img = document.createElement("img");
-    CardImagen.classList.add("card-image");
-    CardFigure.classList.add("image", "is-4by3");
-    Img.setAttribute("src", info.img);
-    CardFigure.insertAdjacentElement("afterbegin", Img);
-    CardImagen.insertAdjacentElement("afterbegin", CardFigure);
-    // Precio
-    const text_precio = document.createElement("p");
-    text_precio.classList.add("subtitle", "is-8");
-    text_precio.textContent = `${pesos}${info.precio}`;
-    //Marca
-    const text_marca = document.createElement("p");
-    text_marca.classList.add("is-8");
-    text_marca.textContent = `Marca ${info.marca}`;
-    //Talla
-    const text_talla = document.createElement("div");
-    const select_talla = document.createElement("select");
-    let tallas = info.talla;
-    let select = `<select>
-                  <option>Talla</option>`;
-    tallas.forEach((value) => {
-      select += `<option value=${value}> ${value}</option>`;
-    });
-    select += `</select><br/>`;
-
-    select_talla.innerHTML = select;
-
-    text_talla.classList.add("select", "is-primary");
-    text_talla.insertAdjacentElement("beforeend", select_talla);
-    // Boton
-    /*     const miNodoBoton = document.createElement('button');
-        miNodoBoton.classList.add('btn', 'btn-primary');
-        miNodoBoton.textContent = '+';
-        miNodoBoton.setAttribute('marcador', info.id);
-  miNodoBoton.addEventListener('click', anyadirProductoAlCarrito); */
-
-    // Insercion de los elmentos
-    estructura.appendChild(card);
-    CardBody.appendChild(CardTitle);
-    CardBody.appendChild(text_precio);
-    CardBody.appendChild(text_marca);
-    CardBody.appendChild(text_talla);
-    /*  CardBody.appendChild(miNodoBoton);*/
+    CardBody.appendChild(dir);
     card.appendChild(CardImagen);
     card.appendChild(CardBody);
     productos.appendChild(estructura);
@@ -335,6 +242,8 @@ function PrecioMenor() {
     //Estructura
     const estructura = document.createElement("div");
     estructura.classList.add("col-sm-4");
+    const espacio = document.createElement("br");
+    estructura.insertAdjacentElement("beforeend", espacio);
     // Card
     const card = document.createElement("div");
     card.classList.add("card");
@@ -362,35 +271,23 @@ function PrecioMenor() {
     const text_marca = document.createElement("p");
     text_marca.classList.add("is-8");
     text_marca.textContent = `Marca ${poduct.marca}`;
-    //Talla
-    const text_talla = document.createElement("div");
-    const select_talla = document.createElement("select");
-    let tallas = poduct.talla;
-    let select = `<select>
-                  <option>Talla</option>`;
-    tallas.forEach((value) => {
-      select += `<option value=${value}> ${value}</option>`;
-    });
-    select += `</select><br/>`;
-
-    select_talla.innerHTML = select;
-
-    text_talla.classList.add("select", "is-primary");
-    text_talla.insertAdjacentElement("beforeend", select_talla);
+    //Direccion
+    const dir = document.createElement("a");
+    dir.setAttribute("href", "html/descripcion.html");
     // Boton
-    /*     const miNodoBoton = document.createElement('button');
-        miNodoBoton.classList.add('btn', 'btn-primary');
-        miNodoBoton.textContent = '+';
-        miNodoBoton.setAttribute('marcador', poduct.id);
-  miNodoBoton.addEventListener('click', anyadirProductoAlCarrito); */
+    const Agregar = document.createElement("button");
+    Agregar.classList.add("button", "is-primary", "is-pulled-right");
+    Agregar.textContent = "Detalles";
+    Agregar.setAttribute("marcador", poduct.id);
+    dir.appendChild(Agregar);
+    Agregar.addEventListener("click", obtener);
 
     // Insercion de los elmentos
     estructura.appendChild(card);
     CardBody.appendChild(CardTitle);
     CardBody.appendChild(text_precio);
     CardBody.appendChild(text_marca);
-    CardBody.appendChild(text_talla);
-    /*  CardBody.appendChild(miNodoBoton);*/
+    CardBody.appendChild(dir);
     card.appendChild(CardImagen);
     card.appendChild(CardBody);
     productos.appendChild(estructura);
@@ -399,7 +296,6 @@ function PrecioMenor() {
 function PrecioMayor() {
   let EliminarCard = Array.prototype.slice.call(
     document.getElementsByClassName("col-sm-4"),
-    0
   );
   for (Eliminar of EliminarCard) {
     Eliminar.remove();
@@ -411,6 +307,8 @@ function PrecioMayor() {
     //Estructura
     const estructura = document.createElement("div");
     estructura.classList.add("col-sm-4");
+    const espacio = document.createElement("br");
+    estructura.insertAdjacentElement("beforeend", espacio);
     // Card
     const card = document.createElement("div");
     card.classList.add("card");
@@ -438,106 +336,139 @@ function PrecioMayor() {
     const text_marca = document.createElement("p");
     text_marca.classList.add("is-8");
     text_marca.textContent = `Marca ${poduct.marca}`;
-    //Talla
-    const text_talla = document.createElement("div");
-    const select_talla = document.createElement("select");
-    let tallas = poduct.talla;
-    let select = `<select>
-                  <option>Talla</option>`;
-    tallas.forEach((value) => {
-      select += `<option value=${value}> ${value}</option>`;
-    });
-    select += `</select><br/>`;
-
-    select_talla.innerHTML = select;
-
-    text_talla.classList.add("select", "is-primary");
-    text_talla.insertAdjacentElement("beforeend", select_talla);
+    //Direccion
+    const dir = document.createElement("a");
+    dir.setAttribute("href", "html/descripcion.html");
     // Boton
     const Agregar = document.createElement("button");
-    Agregar.classList.add("btn", "btn-primary");
-    Agregar.textContent = "+ agregar";
+    Agregar.classList.add("button", "is-primary", "is-pulled-right");
+    Agregar.textContent = "Detalles";
     Agregar.setAttribute("marcador", poduct.id);
-    Agregar.addEventListener("click", anyadirProductoAlCarrito);
+    dir.appendChild(Agregar);
+    Agregar.addEventListener("click", obtener);
 
     // Insercion de los elmentos
     estructura.appendChild(card);
     CardBody.appendChild(CardTitle);
     CardBody.appendChild(text_precio);
     CardBody.appendChild(text_marca);
-    CardBody.appendChild(text_talla);
-    CardBody.appendChild(Agregar);
+    CardBody.appendChild(dir);
     card.appendChild(CardImagen);
     card.appendChild(CardBody);
     productos.appendChild(estructura);
   }
 }
-//AÑIDIR CARRITO
-function carrito() {
-  
+//DESCRIPCION
+function obtener(e) {
+  let id = e.target.getAttribute("marcador");
+  let Calzado = carritoProducto.push(id);
+  ConsultarProducto()
+}  
+//CONFIRMAR LA EXITENCIA DE PRODUCTO
+function ConsultarProducto() {
+  carritoProducto.forEach((item) => {
+    const miItem = producto.filter((itemBaseDatos) => {
+      return itemBaseDatos.id === parseInt(item);
+    });
+    let i = 1;
+    if (miItem) {
+      const calzados = miItem.map((calzado) => {
+        if (calzado.id === producto.id) {
+          console.log(calzado.id);
+          i++;
+          return calzado; // retorna objeto actualizado
+        } else {
+          return calzado; // retorna objeto que no son duplicados
+        }
+      });
+      carritoProducto = [...calzados];
+    } else {
+      carritoProducto = [...carritoProducto, producto];
+    }
+  });
+  setstorage_producto();
+}
+// GUARDAR LA INFORMACION DE LOS ATRIBUTOS DEL PRODUCTO
+function setstorage_producto() {
+  carritoProducto.forEach((info) => {
+    id=info.id;
+    localStorage.setItem("Id", id);
+    img=info.img;
+    localStorage.setItem("img", img);
+    marca=info.marca;
+    localStorage.setItem("marca", marca);
+    modelo=info.modelo;
+    localStorage.setItem("modelo", modelo);
+    precio=info.precio;
+    localStorage.setItem("precio", precio);
+    talla=info.talla;
+    array_talla=JSON.stringify(talla);
+    localStorage.setItem("talla", array_talla);
+
+});
 }
 //EVENTO DE FILTRAR MARCA
 let jordan = document.getElementById("jordan");
 jordan.onclick = () => {
   let Jordan = producto.filter((info) => info.marca.includes("Jordan"));
-  MarcaFiltrar(Jordan);
+  Filtrar(Jordan);
 };
 let nike = document.getElementById("nike");
 nike.onclick = () => {
   let Nike = producto.filter((info) => info.marca.includes("Nike"));
-  MarcaFiltrar(Nike);
+  Filtrar(Nike);
 };
 let adidas = document.getElementById("adidas");
 adidas.onclick = () => {
   let Adidas = producto.filter((info) => info.marca.includes("Adidas"));
-  MarcaFiltrar(Adidas);
+  Filtrar(Adidas);
 };
 let umna = document.getElementById("unam");
 umna.onclick = () => {
   let Under = producto.filter((info) => info.marca.includes("Under Amour"));
-  MarcaFiltrar(Under);
+  Filtrar(Under);
 };
 //SELCCION DE TALLAS
 let talla_UN = document.getElementById("UN");
 talla_UN.onclick = () => {
   let UN_T = producto.filter((info) => info.talla.includes("UN"));
   console.log(UN_T);
-  TallaFiltrar(UN_T);
+  Filtrar(UN_T);
 };
 let talla_3 = document.getElementById("3");
 talla_3.onclick = () => {
   let T_3 = producto.filter((info) => info.talla.includes("3"));
-  TallaFiltrar(T_3);
+  Filtrar(T_3);
 };
 let talla_4 = document.getElementById("4");
 talla_4.onclick = () => {
   let T_4 = producto.filter((info) => info.talla.includes("4"));
-  TallaFiltrar(T_4);
+  Filtrar(T_4);
 };
 let talla_7 = document.getElementById("7");
 talla_7.onclick = () => {
   let T_7 = producto.filter((info) => info.talla.includes("7"));
-  TallaFiltrar(T_7);
+  Filtrar(T_7);
 };
 let talla_10 = document.getElementById("10");
 talla_10.onclick = () => {
   let T_10 = producto.filter((info) => info.talla.includes("10"));
-  TallaFiltrar(T_10);
+  Filtrar(T_10);
 };
 let talla_12 = document.getElementById("12");
 talla_12.onclick = () => {
   let T_12 = producto.filter((info) => info.talla.includes("12"));
-  TallaFiltrar(T_12);
+  Filtrar(T_12);
 };
 let talla_14 = document.getElementById("14");
 talla_14.onclick = () => {
   let T_14 = producto.filter((info) => info.talla.includes("14"));
-  TallaFiltrar(T_14);
+  Filtrar(T_14);
 };
 let talla_16 = document.getElementById("16");
 talla_16.onclick = () => {
   let T_16 = producto.filter((info) => info.talla.includes("16"));
-  TallaFiltrar(T_16);
+  Filtrar(T_16);
 };
 //Eventos de Ordenar
 const Precios_orden = document.querySelector("#orden");
