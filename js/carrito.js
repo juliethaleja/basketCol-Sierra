@@ -11,21 +11,18 @@ carrito.addEventListener('click', Eliminar)
 //AÑIDIR CARRITO
 function Agregarcarrito(e) {
   let Calzado = carritoProducto.push(id);
-  console.log(Calzado);
   EstructuraCarrito(Calzado);
 }
 function EstructuraCarrito(e) {
-    Eliminar();
   //LLAMAR ETIQUETAS
   let img = document.getElementById("imagen").getAttribute("src");
   let modelo = document.getElementById("modelo").textContent;
   let marca = document.getElementById("marca").textContent;
   let precio = document.getElementById("precio").textContent;
   let talla = document.querySelector("[name='talla']").value;
-  console.log(img, modelo, marca, precio, talla);
 
   const row = document.createElement("tr");
-
+  row.id=`row${e}`
   row.innerHTML = `<td>
               <img src="${img}" width="100">
           </td>
@@ -46,29 +43,22 @@ function EstructuraCarrito(e) {
 
   contenedorCarrito.appendChild(row);
   total();
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 //Eliminar productos
 
-function Eliminar() {
-    e.preventDefault();
+function Eliminar(e) {
     if ( e.target.classList.contains('borrar-curso') ){
-        const idCurso = e.target.getAttribute('data-id');
-
-        // Eliminar del arreglo
-        carritoProducto.forEach( curso => {
-            if( curso.id === idCurso){
-                if( curso.cantidad > 1 ) {
-                    curso.cantidad--;
-                    carritoHTML();
-                } else {
-                    articulosCarrito = articulosCarrito.filter(curso => curso.id !== idCurso);
-                    carritoHTML();
-                }
-            }
-        })
+        const idproducto = e.target.getAttribute('data-id');
+        let row=document.getElementById(`row${idproducto}`);
+        let entero=parseInt(carritoProducto.indexOf(`${id}`));
+        carritoProducto.splice(entero,1);
+       contenedorCarrito.removeChild(row);
+       total();
+       localStorage.setItem("carrito", carrito);
     }
 }
-//Calculo Total dde los productos
+//Calculo Total de los productos
 function total() {
   let suma = document.getElementsByClassName("sum_precio");
   let recorrido = [];

@@ -102,6 +102,9 @@ const productos = document.querySelector("#productos");
 let carritoProducto = [];
 const carrito = document.querySelector("#carrito");
 const contenedorCarrito = document.querySelector("#lista-carrito tbody");
+let lastcarrito = localStorage.getItem("carrito");
+console.log(lastcarrito);
+
 
 //FUNCION PARA MOSTRAR PRODUCTOS EN CARDS
 function EstructuraProductos() {
