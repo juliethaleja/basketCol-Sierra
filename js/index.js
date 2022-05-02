@@ -100,14 +100,12 @@ const producto = [
 const pesos = "$";
 const productos = document.querySelector("#productos");
 let carritoProducto = [];
-const carrito = document.querySelector("#carrito");
-const contenedorCarrito = document.querySelector("#lista-carrito tbody");
 let lastcarrito = localStorage.getItem("carrito");
-console.log(lastcarrito);
 
 
 //FUNCION PARA MOSTRAR PRODUCTOS EN CARDS
 function EstructuraProductos() {
+  console.log(lastcarrito);
   producto.forEach((info) => {
     //Estructura
     const estructura = document.createElement("div");
@@ -373,16 +371,9 @@ function ConsultarProducto() {
     const miItem = producto.filter((itemBaseDatos) => {
       return itemBaseDatos.id === parseInt(item);
     });
-    let i = 1;
     if (miItem) {
       const calzados = miItem.map((calzado) => {
-        if (calzado.id === producto.id) {
-          console.log(calzado.id);
-          i++;
-          return calzado; // retorna objeto actualizado
-        } else {
-          return calzado; // retorna objeto que no son duplicados
-        }
+        return calzado;
       });
       carritoProducto = [...calzados];
     } else {
@@ -394,17 +385,12 @@ function ConsultarProducto() {
 // GUARDAR LA INFORMACION DE LOS ATRIBUTOS DEL PRODUCTO
 function setstorage_producto() {
   carritoProducto.forEach((info) => {
-    id=info.id;
+    const{id,img,marca,modelo,precio,talla}=info;
     localStorage.setItem("Id", id);
-    img=info.img;
     localStorage.setItem("img", img);
-    marca=info.marca;
     localStorage.setItem("marca", marca);
-    modelo=info.modelo;
     localStorage.setItem("modelo", modelo);
-    precio=info.precio;
     localStorage.setItem("precio", precio);
-    talla=info.talla;
     array_talla=JSON.stringify(talla);
     localStorage.setItem("talla", array_talla);
 
