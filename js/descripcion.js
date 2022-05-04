@@ -30,5 +30,6 @@ function estructuraDescripcion() {
   select += `</select><br/>`;
 
   talla.innerHTML = select;
+
 }
 estructuraDescripcion();

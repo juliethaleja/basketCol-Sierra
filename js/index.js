@@ -173,6 +173,7 @@ function Filtrar(clave) {
     Eliminar.remove();
   }
   clave.forEach((info) => {
+    console.log(info);
     //Estructura
     const estructura = document.createElement("div");
     estructura.classList.add("col-sm-4");

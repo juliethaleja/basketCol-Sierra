@@ -1,6 +1,8 @@
 const carrito = document.querySelector("#carrito");
 const contenedorCarrito = document.querySelector("#lista-carrito tbody");
 let carritoProducto = [];
+let bd=[];
+
 let id = localStorage.getItem("Id");
 //EVENTO CLICK AÑADIR
 let comprar = document.getElementById("comprar");
@@ -8,18 +10,21 @@ comprar.addEventListener("click", Agregarcarrito);
 //EVENTO ELIMINAR PRODUCTO
 carrito.addEventListener("click", Eliminar);
 
-
 //AÑIDIR CARRITO
 function Agregarcarrito() {
   const product = document.querySelector("[name='talla']").value;
-  const clave=[''+product+'_'+id+'']
+  const clave = ["" + product + "_" + id + ""];
   let Calzado = carritoProducto.push(...clave);
-  EstructuraCarrito(Calzado);
+  let lastcarrito = localStorage.getItem("carrito");
+console.log(lastcarrito);  EstructuraCarrito(Calzado);
 }
 
 function EstructuraCarrito(e) {
+  //CREAR UN NUEVO ID
+  const product = document.querySelector("[name='talla']").value;
+  const clave = ["" + product + "_" + id + ""];
   //Limpiar Filas
-  limpiarHTML()
+  limpiarHTML() 
   const producto = {
     //LLAMAR ETIQUETAS
     img: document.getElementById("imagen").getAttribute("src"),
@@ -27,54 +32,62 @@ function EstructuraCarrito(e) {
     marca: document.getElementById("marca").textContent,
     precio: document.getElementById("precio").textContent,
     talla: document.querySelector("[name='talla']").value,
-    id:id,
+    id: product+'_'+id,
   };
+  bd.push(producto)
+  console.log(bd);
   Toastify({
-    text: "Se agrego al carrito de compras un producto de"+producto.modelo+"con un valor de "+producto.precio,
-  
-    duration: 1000,
+    text:
+      "Se agrego al carrito de compras un producto de" +
+      producto.modelo +
+      "con un valor de " +
+      producto.precio,
+
+    duration: 2000,
     style: {
       background: "#00d1b2",
-    }
-    }).showToast();
+    },
+  }).showToast();
   //CREAR NUEVO CARRITO
-  const Norepetir = [...new Set(carritoProducto)];
-  console.log( Norepetir );
+ const Norepetir = [...new Set(carritoProducto)];
   Norepetir.forEach((item) => {
-    const { img, marca, modelo, precio, talla } = producto;
+
+    const miItem = bd.filter((itemBd) => {
+      return itemBd.id === item;
+    }); 
     const Cantidad = carritoProducto.reduce((total, itemId) => {
-      return itemId === item ? total += 1 : total;
+      let comp = itemId === item;
+      return comp ? (total += 1) : total;
     }, 0);
     const row = document.createElement("tr");
     row.id = `row${e}`;
     row.innerHTML = `<td>
-              <img src="${img}" width="100">
+              <img src="${miItem[0].img}" width="100">
           </td>
           <td>
               ${Cantidad}
           </td>
           <td>
-              ${modelo}
+              ${miItem[0].modelo}
           </td>
           <td>
-              ${marca}
+              ${miItem[0].marca}
           </td>
           <td class='sum_precio'>
-              ${precio}
+              ${miItem[0].precio}
           </td>
           <td>
-              ${talla}
+              ${miItem[0].talla}
           </td>
           <td>
               <a href="#" class="borrar-curso" data-id="${row.id}" >
                   X
               </a>
               </td>`;
-
-    contenedorCarrito.appendChild(row);
-    total();
+              contenedorCarrito.appendChild(row);
   });
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+  total();
+  localStorage.setItem("carrito", JSON.stringify(bd));
 }
 //Eliminar productos
 
@@ -88,13 +101,13 @@ function Eliminar(e) {
     total();
     Toastify({
       text: "Se removio un producto al carrito de compras",
-    
+
       duration: 1000,
       style: {
         background: "#c83e36",
-      }
-      }).showToast();
-    localStorage.setItem("carrito", contenedorCarrito);
+      },
+    }).showToast();
+    localStorage.setItem("carrito", bd);
   }
 }
 //Calculo Total de los productos
@@ -104,6 +117,7 @@ function total() {
   let total = 0;
   for (let i = 0; i < suma.length; i++) {
     const incremet = suma[i].textContent;
+    console.log(incremet);
     let valor_i = parseFloat(incremet);
     recorrido.push(valor_i);
     total += parseFloat(recorrido);
@@ -112,9 +126,8 @@ function total() {
   let mostrar = document.getElementById("total");
   mostrar.textContent = total;
 }
-function limpiarHTML(){
-
-  while( contenedorCarrito.firstChild ){
-      contenedorCarrito.removeChild(contenedorCarrito.firstChild)
+function limpiarHTML() {
+  while (contenedorCarrito.firstChild) {
+    contenedorCarrito.removeChild(contenedorCarrito.firstChild);
   }
 }
