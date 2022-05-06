@@ -2,6 +2,8 @@ const carrito = document.querySelector("#carrito");
 const contenedorCarrito = document.querySelector("#lista-carrito tbody");
 let carritoProducto = [];
 let bd=[];
+let pasar=[];
+
 
 let id = localStorage.getItem("Id");
 //EVENTO CLICK AÑADIR
@@ -15,14 +17,13 @@ function Agregarcarrito() {
   const product = document.querySelector("[name='talla']").value;
   const clave = ["" + product + "_" + id + ""];
   let Calzado = carritoProducto.push(...clave);
-  let lastcarrito = localStorage.getItem("carrito");
-console.log(lastcarrito);  EstructuraCarrito(Calzado);
+
+EstructuraCarrito(Calzado);
 }
 
 function EstructuraCarrito(e) {
   //CREAR UN NUEVO ID
   const product = document.querySelector("[name='talla']").value;
-  const clave = ["" + product + "_" + id + ""];
   //Limpiar Filas
   limpiarHTML() 
   const producto = {
@@ -35,10 +36,9 @@ function EstructuraCarrito(e) {
     id: product+'_'+id,
   };
   bd.push(producto)
-  console.log(bd);
   Toastify({
     text:
-      "Se agrego al carrito de compras un producto de" +
+    "Se agrego al carrito de compras un producto de" +
       producto.modelo +
       "con un valor de " +
       producto.precio,
@@ -59,6 +59,17 @@ function EstructuraCarrito(e) {
       let comp = itemId === item;
       return comp ? (total += 1) : total;
     }, 0);
+    let save={
+      img: miItem[0].img,
+      Cantidad:Cantidad,
+      modelo: miItem[0].modelo,
+      marca: miItem[0].marca,
+      precio: miItem[0].precio,
+      talla: miItem[0].talla,
+      id: miItem[0].id
+    }
+    console.log(save);
+
     const row = document.createElement("tr");
     row.id = `row${e}`;
     row.innerHTML = `<td>
@@ -85,9 +96,10 @@ function EstructuraCarrito(e) {
               </a>
               </td>`;
               contenedorCarrito.appendChild(row);
+              pasar.push(save)
   });
   total();
-  localStorage.setItem("carrito", JSON.stringify(bd));
+  localStorage.setItem("carrito", JSON.stringify(pasar));
 }
 //Eliminar productos
 
