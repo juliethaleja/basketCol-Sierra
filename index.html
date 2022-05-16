@@ -12,13 +12,15 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
 </head>
 
 <body>
   <header>
     <nav class="header navbar navbar-expand-lg shadow navbar-dark fixed-top menu p-2">
       <div class="container-fluid">
-        <a href="index.html">
+        <a id="inicio">
           <img class="logo" src="img/logo.png" />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -55,7 +57,7 @@
   <section class="section">
     <div class="container-fluid">
       <div class="columns">
-        <div class="column is-2">
+        <div id="panel" class="column is-2">
           <aside class="menu">
             <h5>Filtrar por:</h5>
             <p class="menu-label">MARCA</p>
@@ -171,7 +173,8 @@
     </div>
     </div>
   </section>
-  <script src="js/index.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="js/index.js" type="module"></script>
 
 </body>
 

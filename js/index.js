@@ -1,3 +1,13 @@
+import { Descripcion } from "./descripcion.js";
+import { Agregarcarrito, Eliminar } from "./carrito.js";
+
+ const pesos = "$";
+const productos = document.querySelector("#productos");
+let carritoProducto = [];
+let traer = window.localStorage.getItem("carrito");
+window.localStorage.setItem("carrito", traer);
+let saveProduct = [];
+
 //PETICION FETCH
 async function getProduct() {
   let url = "data/producto.json";
@@ -8,17 +18,11 @@ async function getProduct() {
     console.log(error);
   }
 }
-
-const pesos = "$";
-const productos = document.querySelector("#productos");
-let carritoProducto = [];
-let lastcarrito = localStorage.getItem("carrito");
-let saveProduct=[];
-saveProduct.push(lastcarrito);
-
-//FUNCION PARA MOSTRAR PRODUCTOS EN CARDS
-async function EstructuraProductos() {
-  let producto = await getProduct();
+window.onload=function () {
+  async function eventos() {
+  //Inicio
+  document.getElementById("inicio").addEventListener("click",EstructuraProductos)
+    let producto = await getProduct();
   //EVENTO DE FILTRAR MARCA
   let jordan = document.getElementById("jordan");
   jordan.onclick = () => {
@@ -85,7 +89,7 @@ async function EstructuraProductos() {
   //Eventos de Ordenar
   const Precios_orden = document.querySelector("#orden");
   Precios_orden.addEventListener("change", (event) => {
-    resultado = `${event.target.value}`;
+    let resultado = `${event.target.value}`;
     if (resultado == "menor_mayor") {
       //menor a Mayor
       PrecioMenor();
@@ -94,6 +98,21 @@ async function EstructuraProductos() {
       PrecioMayor();
     }
   });
+  EstructuraProductos();
+ }
+ async function detalle() {
+  let detalles = Array.prototype.slice.call(
+    document.getElementsByClassName("detalles")
+  );
+  for (detalle of detalles) {
+    detalle.addEventListener("click", obtener);
+  }
+}
+ //FUNCION PARA MOSTRAR PRODUCTOS EN CARDS
+async function EstructuraProductos() {
+  productos.innerHTML='';
+  document.getElementById("panel").style.display='block';
+  let producto = await getProduct(); 
   producto.forEach((info) => {
     //Estructura
     const estructura = document.createElement("div");
@@ -130,14 +149,13 @@ async function EstructuraProductos() {
     text_marca.textContent = `Marca ${info.marca}`;
     //Direccion
     const dir = document.createElement("a");
-    dir.setAttribute("href", "html/descripcion.html");
+    dir.classList.add("detalles");
     // Boton
     const Agregar = document.createElement("button");
     Agregar.classList.add("button", "is-primary", "is-pulled-right");
     Agregar.textContent = "Detalles";
     Agregar.setAttribute("marcador", info.id);
     dir.appendChild(Agregar);
-    Agregar.addEventListener("click", obtener);
 
     // Insercion de los elmentos
     estructura.appendChild(card);
@@ -149,24 +167,24 @@ async function EstructuraProductos() {
     card.appendChild(CardBody);
     productos.appendChild(estructura);
   });
-}
-EstructuraProductos();
+  let detalles = Array.prototype.slice.call(
+    document.getElementsByClassName("detalles")
+  );
+  for (detalle of detalles) {
+    detalle.addEventListener("click", obtener);
+  }
+} 
 
 //FUNCION PARA FILTRAR
-async function Filtrar(clave) {
-  let EliminarCard = Array.prototype.slice.call(
-    document.getElementsByClassName("col-sm-4")
-  );
-  for (Eliminar of EliminarCard) {
-    Eliminar.remove();
-  }
+ function Filtrar(clave) {
+productos.innerHTML='';
   clave.forEach((info) => {
-    console.log(info);
     //Estructura
     const estructura = document.createElement("div");
-    estructura.classList.add("col-sm-4");
     const espacio = document.createElement("br");
     estructura.insertAdjacentElement("beforeend", espacio);
+
+    estructura.classList.add("col-sm-4");
     // Card
     const card = document.createElement("div");
     card.classList.add("card");
@@ -196,14 +214,13 @@ async function Filtrar(clave) {
     text_marca.textContent = `Marca ${info.marca}`;
     //Direccion
     const dir = document.createElement("a");
-    dir.setAttribute("href", "html/descripcion.html");
+    dir.classList.add("detalles");
     // Boton
     const Agregar = document.createElement("button");
     Agregar.classList.add("button", "is-primary", "is-pulled-right");
     Agregar.textContent = "Detalles";
     Agregar.setAttribute("marcador", info.id);
     dir.appendChild(Agregar);
-    Agregar.addEventListener("click", obtener);
 
     // Insercion de los elmentos
     estructura.appendChild(card);
@@ -214,82 +231,86 @@ async function Filtrar(clave) {
     card.appendChild(CardImagen);
     card.appendChild(CardBody);
     productos.appendChild(estructura);
+
   });
+  let detalles = Array.prototype.slice.call(
+    document.getElementsByClassName("detalles")
+  );
+  for (detalle of detalles) {
+    detalle.addEventListener("click", obtener);
+  }
 }
 //FUNCION PARA ORDENAR PRECIOS
 async function PrecioMenor() {
-  let EliminarCard = Array.prototype.slice.call(
-    document.getElementsByClassName("col-sm-4")
-  );
-  for (Eliminar of EliminarCard) {
-    Eliminar.remove();
-  }
+  productos.innerHTML='';
   let producto = await getProduct();
   producto.sort(function (a, b) {
     return a.precio - b.precio;
   });
   for (let poduct of producto) {
-    //Estructura
-    const estructura = document.createElement("div");
-    estructura.classList.add("col-sm-4");
-    const espacio = document.createElement("br");
-    estructura.insertAdjacentElement("beforeend", espacio);
-    // Card
-    const card = document.createElement("div");
-    card.classList.add("card");
-    // Body
-    const CardBody = document.createElement("div");
-    CardBody.classList.add("card-content");
-    // Titulo
-    const CardTitle = document.createElement("h5");
-    CardTitle.classList.add("title", "is-7");
-    CardTitle.textContent = poduct.modelo;
-    // Imagen
-    const CardImagen = document.createElement("div");
-    const CardFigure = document.createElement("figure");
-    const Img = document.createElement("img");
-    CardImagen.classList.add("card-image");
-    CardFigure.classList.add("image", "is-4by3");
-    Img.setAttribute("src", poduct.img);
-    CardFigure.insertAdjacentElement("afterbegin", Img);
-    CardImagen.insertAdjacentElement("afterbegin", CardFigure);
-    // Precio
-    const text_precio = document.createElement("p");
-    text_precio.classList.add("subtitle", "is-8");
-    text_precio.textContent = `${pesos}${poduct.precio}`;
-    //Marca
-    const text_marca = document.createElement("p");
-    text_marca.classList.add("is-8");
-    text_marca.textContent = `Marca ${poduct.marca}`;
-    //Direccion
-    const dir = document.createElement("a");
-    dir.setAttribute("href", "html/descripcion.html");
-    // Boton
-    const Agregar = document.createElement("button");
-    Agregar.classList.add("button", "is-primary", "is-pulled-right");
-    Agregar.textContent = "Detalles";
-    Agregar.setAttribute("marcador", poduct.id);
-    dir.appendChild(Agregar);
-    Agregar.addEventListener("click", obtener);
+      //Estructura
+      const estructura = document.createElement("div");
+      const espacio = document.createElement("br");
+      estructura.insertAdjacentElement("beforeend", espacio);
+  
+      estructura.classList.add("col-sm-4");
+      // Card
+      const card = document.createElement("div");
+      card.classList.add("card");
+      // Body
+      const CardBody = document.createElement("div");
+      CardBody.classList.add("card-content");
+      // Titulo
+      const CardTitle = document.createElement("h5");
+      CardTitle.classList.add("title", "is-7");
+      CardTitle.textContent = poduct.modelo;
+      // Imagen
+      const CardImagen = document.createElement("div");
+      const CardFigure = document.createElement("figure");
+      const Img = document.createElement("img");
+      CardImagen.classList.add("card-image");
+      CardFigure.classList.add("image", "is-4by3");
+      Img.setAttribute("src", poduct.img);
+      CardFigure.insertAdjacentElement("afterbegin", Img);
+      CardImagen.insertAdjacentElement("afterbegin", CardFigure);
+      // Precio
+      const text_precio = document.createElement("p");
+      text_precio.classList.add("subtitle", "is-8");
+      text_precio.textContent = `${pesos}${poduct.precio}`;
+      //Marca
+      const text_marca = document.createElement("p");
+      text_marca.classList.add("is-8");
+      text_marca.textContent = `Marca ${poduct.marca}`;
+      //Direccion
+      const dir = document.createElement("a");
+      dir.classList.add("detalles");
+      // Boton
+      const Agregar = document.createElement("button");
+      Agregar.classList.add("button", "is-primary", "is-pulled-right");
+      Agregar.textContent = "Detalles";
+      Agregar.setAttribute("marcador", poduct.id);
+      dir.appendChild(Agregar);
+  
+      // Insercion de los elmentos
+      estructura.appendChild(card);
+      CardBody.appendChild(CardTitle);
+      CardBody.appendChild(text_precio);
+      CardBody.appendChild(text_marca);
+      CardBody.appendChild(dir);
+      card.appendChild(CardImagen);
+      card.appendChild(CardBody);
+      productos.appendChild(estructura);
+    }
+    let detalles = Array.prototype.slice.call(
+      document.getElementsByClassName("detalles")
+    );
+    for (detalle of detalles) {
+      detalle.addEventListener("click", obtener);
+    }
 
-    // Insercion de los elmentos
-    estructura.appendChild(card);
-    CardBody.appendChild(CardTitle);
-    CardBody.appendChild(text_precio);
-    CardBody.appendChild(text_marca);
-    CardBody.appendChild(dir);
-    card.appendChild(CardImagen);
-    card.appendChild(CardBody);
-    productos.appendChild(estructura);
-  }
 }
 async function PrecioMayor() {
-  let EliminarCard = Array.prototype.slice.call(
-    document.getElementsByClassName("col-sm-4")
-  );
-  for (Eliminar of EliminarCard) {
-    Eliminar.remove();
-  }
+  productos.innerHTML='';
   let producto = await getProduct();
   producto.sort(function (a, b) {
     return b.precio - a.precio;
@@ -297,9 +318,10 @@ async function PrecioMayor() {
   for (let poduct of producto) {
     //Estructura
     const estructura = document.createElement("div");
-    estructura.classList.add("col-sm-4");
     const espacio = document.createElement("br");
     estructura.insertAdjacentElement("beforeend", espacio);
+
+    estructura.classList.add("col-sm-4");
     // Card
     const card = document.createElement("div");
     card.classList.add("card");
@@ -329,14 +351,13 @@ async function PrecioMayor() {
     text_marca.textContent = `Marca ${poduct.marca}`;
     //Direccion
     const dir = document.createElement("a");
-    dir.setAttribute("href", "html/descripcion.html");
+    dir.classList.add("detalles");
     // Boton
     const Agregar = document.createElement("button");
     Agregar.classList.add("button", "is-primary", "is-pulled-right");
     Agregar.textContent = "Detalles";
     Agregar.setAttribute("marcador", poduct.id);
     dir.appendChild(Agregar);
-    Agregar.addEventListener("click", obtener);
 
     // Insercion de los elmentos
     estructura.appendChild(card);
@@ -348,11 +369,79 @@ async function PrecioMayor() {
     card.appendChild(CardBody);
     productos.appendChild(estructura);
   }
+  let detalles = Array.prototype.slice.call(
+    document.getElementsByClassName("detalles")
+  );
+  for (detalle of detalles) {
+    detalle.addEventListener("click", obtener);
+  }
+
 }
+
+// GUARDAR LA INFORMACION DE LOS ATRIBUTOS DEL PRODUCTO
+function setstorage_producto() {
+  carritoProducto.forEach((info) => {
+    const { id, img, marca, modelo, precio, talla } = info;
+    localStorage.setItem("Id", id);
+    localStorage.setItem("img", img);
+    localStorage.setItem("marca", marca);
+    localStorage.setItem("modelo", modelo);
+    localStorage.setItem("precio", precio);
+    let array_talla = JSON.stringify(talla);
+    localStorage.setItem("talla", array_talla);
+  });
+}
+//ESTRUCTURA DE DESCRIPCIÓN
+function Base() {
+  document.getElementById("panel").style.display='none';
+  let productos=document.querySelector("#productos");
+  productos.innerHTML='';
+productos.innerHTML=`          
+<div class="column is-12" >
+<div class="card ">
+    <div class="row">
+        <div class="col-lg-8 pr-4 " >
+            <img id="imagen" class="img-shadow img-fluid "  alt="wrapkit" />
+        </div>
+        
+        <div class="col-lg-4 p-5">
+            <div class="text-box">
+                <form class="mt-3">
+                    <h4 id="modelo"class="font-weight-blod block"></h4>
+                    <h2 id="precio"class="font-weight-light"><span>$</span></h2>
+                    <p id="marca"></p>
+                    <div id ="talla" class="mb-3 select is-primary is-fullwidth">
+                      <select required>
+                        <option>Talla</option>
+                      </select>
+                    </div>
+                    <input id ="comprar" type="button" value="Comprar"class="button is-primary is-medium is-fullwidth"/>
+                </form>
+                <h1 id="respuesta"></h1>
+            </div>
+        </div>
+    </div>
+</div>
+</div>` 
+let descripcion=  new Descripcion();
+descripcion.estructuraDescripcion();
+let comprar = document.getElementById("comprar");
+comprar.onclick = () => {
+  
+  Agregarcarrito();
+}
+const tienda = document.querySelector("#carrito");
+tienda.onclick = () => {
+
+  Eliminar();
+}
+}
+
 //DESCRIPCION
 function obtener(e) {
   let id = e.target.getAttribute("marcador");
-  let Calzado = carritoProducto.push(id);
+  carritoProducto.push(id);
+  console.log(carritoProducto);
   ConsultarProducto();
 }
 //CONFIRMAR LA EXITENCIA DE PRODUCTO
@@ -372,17 +461,12 @@ async function ConsultarProducto() {
     }
   });
   setstorage_producto();
+  Base();
+
 }
-// GUARDAR LA INFORMACION DE LOS ATRIBUTOS DEL PRODUCTO
-function setstorage_producto() {
-  carritoProducto.forEach((info) => {
-    const { id, img, marca, modelo, precio, talla } = info;
-    localStorage.setItem("Id", id);
-    localStorage.setItem("img", img);
-    localStorage.setItem("marca", marca);
-    localStorage.setItem("modelo", modelo);
-    localStorage.setItem("precio", precio);
-    array_talla = JSON.stringify(talla);
-    localStorage.setItem("talla", array_talla);
-  });
+
+eventos();
+
 }
+
+
