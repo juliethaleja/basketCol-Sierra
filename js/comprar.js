@@ -1,4 +1,5 @@
  
+ //Pago exitoso
  export function mensaje(nombre,ciudad,direccion,total){
 
      document.getElementById("anuncio").textContent=`!Hola ${nombre},El pago fue realizado con éxito¡`

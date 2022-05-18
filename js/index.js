@@ -477,6 +477,7 @@ async function ConsultarProducto() {
   Base();
 
 }
+//Formulario de venta
 function Finalizar() {
   document.getElementById("panel").style.display='none';
   document.getElementById("ordenar").style.display='none';
@@ -559,6 +560,7 @@ tienda.onclick = (e) => {
 }
  document.getElementById("pagar").addEventListener("submit",Pagar);
 }
+// confirmacion de pago
 function Pagar() {
   let nombre=document.getElementById("nombre_p").value;
 let ciudad=document.getElementById("ciudad_p").value;
