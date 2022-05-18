@@ -30,8 +30,8 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <div class="two columns u-pull-right">
             <ul class="BaseCarri">
-                <li class="submenu">
-                  <i class="fas fa-shopping-cart  fa-lg pt-3" id="img-carrito"></i>
+                <li  id="icon-carrito"class="submenu">
+                  <i class="fas fa-shopping-cart fa-lg p-3"><span id="contador"class="count"></span></i>
                         <div id="carrito">
                           <table id="lista-carrito" class=" table is-striped
                           u-full-width">
@@ -39,14 +39,15 @@
                                 <tr>
                                     <th>Imagen</th>
                                     <th>Nombre</th>
+                                    <th>Marca</th>
                                     <th>Precio</th>
                                     <th>Talla</th>
-                                    <th>Cantidad</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
                           <p class="text-left">Total: <span id="total"></span>$</p>
+                          <button class="button is-primary is-outlined is-fullwidth" id="Comprar">Comprar</button>
                         </div>
                 </li>
             </ul>
@@ -154,7 +155,7 @@
         <div class="column is-10">
           <div class="columns">
             <div class="column is-12 ">
-              <div class="select is-primary is-pulled-right	">
+              <div  id ="ordenar"class="select is-primary is-pulled-right	">
                 <select id="orden">
                   <option>Ordenar por</option>
                   <option value="menor_mayor"> De menor a mayor precio</option>
@@ -168,13 +169,18 @@
             </div>
           </div>
         </div>
-      </div>
       </br>
+    </div>
+    <div class="columns">
+      <div class="column is-12">
+        <div class="row" id="producto">
+        </div>
+    </div>
     </div>
     </div>
   </section>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-  <script src="js/index.js" type="module"></script>
+    <script src="js/index.js" type="module"></script>
 
 </body>
 

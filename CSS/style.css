@@ -35,7 +35,23 @@ header {
   z-index: 1;
   background-color: white;
   padding: 20px;
-  min-height: 400px;
+  min-height: 300px;
   min-width: 500px;
+}
+
+.submenu .count {
+  position: absolute;
+  font-size: 15px;
+  right: 3px;
+  border-radius: 60%;
+  padding: 2px 5px;
+  color: black;
+  background-color: white;
+  border: 1px solid #000;
+  top: 5px;
+}
+
+#Comprar {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

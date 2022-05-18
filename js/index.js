@@ -1,12 +1,12 @@
 import { Descripcion } from "./descripcion.js";
-import { Agregarcarrito, Eliminar } from "./carrito.js";
+import { Agregarcarrito, Eliminar,contador } from "./carrito.js";
+import { mensaje} from "./comprar.js";
 
  const pesos = "$";
 const productos = document.querySelector("#productos");
 let carritoProducto = [];
-let traer = window.localStorage.getItem("carrito");
-window.localStorage.setItem("carrito", traer);
-let saveProduct = [];
+document.querySelector("#contador").textContent=0;
+
 
 //PETICION FETCH
 async function getProduct() {
@@ -99,14 +99,15 @@ window.onload=function () {
     }
   });
   EstructuraProductos();
+  //Pre-compra
+  document.getElementById("Comprar").addEventListener("click",Finalizar)
+
  }
+// funcion Boton Detalle
  async function detalle() {
   let detalles = Array.prototype.slice.call(
     document.getElementsByClassName("detalles")
   );
-  for (detalle of detalles) {
-    detalle.addEventListener("click", obtener);
-  }
 }
  //FUNCION PARA MOSTRAR PRODUCTOS EN CARDS
 async function EstructuraProductos() {
@@ -174,7 +175,6 @@ async function EstructuraProductos() {
     detalle.addEventListener("click", obtener);
   }
 } 
-
 //FUNCION PARA FILTRAR
  function Filtrar(clave) {
 productos.innerHTML='';
@@ -377,7 +377,6 @@ async function PrecioMayor() {
   }
 
 }
-
 // GUARDAR LA INFORMACION DE LOS ATRIBUTOS DEL PRODUCTO
 function setstorage_producto() {
   carritoProducto.forEach((info) => {
@@ -394,9 +393,11 @@ function setstorage_producto() {
 //ESTRUCTURA DE DESCRIPCIÓN
 function Base() {
   document.getElementById("panel").style.display='none';
+  document.getElementById("ordenar").style.display='none';
   let productos=document.querySelector("#productos");
+  let producto=document.querySelector("#producto");
   productos.innerHTML='';
-productos.innerHTML=`          
+producto.innerHTML=`          
 <div class="column is-12" >
 <div class="card ">
     <div class="row">
@@ -415,7 +416,7 @@ productos.innerHTML=`
                         <option>Talla</option>
                       </select>
                     </div>
-                    <input id ="comprar" type="button" value="Comprar"class="button is-primary is-medium is-fullwidth"/>
+                    <input id ="comprar" type="button" value="Agregar"class="button is-primary is-medium is-fullwidth"/>
                 </form>
                 <h1 id="respuesta"></h1>
             </div>
@@ -423,20 +424,32 @@ productos.innerHTML=`
     </div>
 </div>
 </div>` 
+//Organizar datos del producto
 let descripcion=  new Descripcion();
 descripcion.estructuraDescripcion();
+//Escuchar evento de los botones de aggregar y eliminar
 let comprar = document.getElementById("comprar");
-comprar.onclick = () => {
-  
-  Agregarcarrito();
-}
 const tienda = document.querySelector("#carrito");
-tienda.onclick = () => {
+//evento agregar
+comprar.onclick = () => {
+  //Agregar carrito
+  Agregarcarrito();
 
-  Eliminar();
+  document.querySelector("#Comprar").style.display='block';
+  document.querySelector("#contador").textContent=contador.length;
+}
+//Eliminar
+tienda.onclick = (e) => {
+  if (e.target.classList.contains("borrar-curso")) {
+    const idproducto = e.target.getAttribute("data-id");
+    let row = document.getElementById(`${idproducto}`);
+  Eliminar(row);
+  document.querySelector("#contador").textContent=contador.length;
+  let comprar= (document.querySelector("#contador") == 0) ?  document.querySelector("#Comprar").style.display='none' :  document.querySelector("#Comprar").style.display='none';
+
+  }
 }
 }
-
 //DESCRIPCION
 function obtener(e) {
   let id = e.target.getAttribute("marcador");
@@ -464,7 +477,112 @@ async function ConsultarProducto() {
   Base();
 
 }
+function Finalizar() {
+  document.getElementById("panel").style.display='none';
+  document.getElementById("ordenar").style.display='none';
+  document.getElementById("Comprar").style.display='none';
+  document.getElementById("icon-carrito").style.display='none';
+  let productos=document.querySelector("#productos");
+  let producto=document.querySelector("#producto");
+  let listado=document.getElementById("carrito").innerHTML;
+  productos.innerHTML='';
+  producto.innerHTML=`          
+<div class="column is-12" >
+  <h2 class="text-center">Finalizar Compra</h2>
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <div class="card p-5">
+        <h4 class="text-center">Listado de productos</h4>
+          <div id="listado">
+          ${listado}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-12">
+      <div class="card p-3">
+     <h4 class="text-center">Datos del Usuario</h4>
+      <form id="pagar">
+      <div class="field">
+      <div class="control">
+      <input class="input text-uppercase" id="nombre_p" type="text" placeholder="Nombre del cliente" required>
+      </div>
+      </div>
+      <div class="field">
+      <div class="control">
+      <input class="input text-uppercase" id="ciudad_p" type="text" placeholder="Ciudad" required>
+      </div>
+      </div>
+      <div class="field">
+      <div class="control">
+      <input class="input text-uppercase" id="direccion_p" type="text" placeholder="Direccion" required>
+      </div>
+      </div>
+      <div class="field">
+      <div class="control">
+      <input class="input" id="email" type="email" placeholder="Correo electronico" required>
+      </div>
+      </div>
+      <div class="field">
+      <div class="control">
+      <input class="input" type="number" id="card-number" placeholder="Numero de tarjeta"required>
+      </div>
+      </div>
+      <div class="field">
+      <div class="control">
+      <input class="input" type="number" id="card-date" placeholder="MM/YY" maxlength="7" required>
+      </div>
+      </div>
+      <div class="field">
+      <div class="control">
+      <input class="input" id="card-ccv" type="number" placeholder="CCV" maxlength="4" required>
+      </div>
+      </div>
+      <button class="button is-primary is-outlined is-fullwidth" type="submit" >Pagar</button>
+      </form>
+      </div>
+      </div>
+    </div>
+    </br>
+</div>`;
 
+const tienda = document.querySelector("#listado");
+tienda.onclick = (e) => {
+  if (e.target.classList.contains("borrar-curso")) {
+    const idproducto = e.target.getAttribute("data-id");
+    let row = document.getElementById(`${idproducto}`);
+  Eliminar(row);
+  listado=document.getElementById("carrito").innerHTML;
+  document.getElementById("listado").innerHTML="";
+  document.getElementById("listado").innerHTML=listado;
+  document.querySelector("#contador").textContent=contador.length;
+  }
+}
+ document.getElementById("pagar").addEventListener("submit",Pagar);
+}
+function Pagar() {
+  let nombre=document.getElementById("nombre_p").value;
+let ciudad=document.getElementById("ciudad_p").value;
+let direccion=document.getElementById("direccion_p").value;
+let total=document.getElementById("total").textContent;
+  document.getElementById("panel").style.display='none';
+  document.getElementById("ordenar").style.display='none';
+  document.getElementById("Comprar").style.display='none';
+  document.getElementById("icon-carrito").style.display='none';
+  let productos=document.querySelector("#productos");
+  let producto=document.querySelector("#producto");
+  productos.innerHTML='';
+  producto.innerHTML=`          
+<div class="column is-12" >
+  <h2 class="text-center">Gracia por la compra</h2>
+
+        <div class="card p-5">
+         <h4 class="text-center" id="anuncio"></h4>
+         <h4 class="text-center" id="ubicacion"></h4>
+         <h4 class="text-center" id="total_anuncio"></h4>
+        <div>
+</div>`
+mensaje(nombre,ciudad,direccion,total);
+}
 eventos();
 
 }

@@ -6,14 +6,12 @@ export function Agregarcarrito() {
   let id = localStorage.getItem("Id");
   const product = document.querySelector("[name='talla']").value;
   const clave = ["" + product + "_" + id + ""];
-  let contador=carritoProducto.push(...clave);
+  carritoProducto.push(...clave);
   EstructuraCarrito();
 }
-
-export function Eliminar(e) {
-  if (e.target.classList.contains("borrar-curso")) {
-    const idproducto = e.target.getAttribute("data-id");
-    let row = document.getElementById(`${idproducto}`);
+export {carritoProducto as contador} ;
+export function Eliminar(row) {
+  let id = localStorage.getItem("Id");
     let entero = parseInt(carritoProducto.indexOf(`${id}`));
     bd.splice(entero, 1);
     carritoProducto.splice(entero, 1);
@@ -26,9 +24,7 @@ export function Eliminar(e) {
         background: "#c83e36",
       },
     }).showToast();
-  }
-  let total = new Total();
-  mostrar.textContent = total.total();
+  mostrar.textContent = total();
 }
 function EstructuraCarrito() {
   //CREAR UN NUEVO ID
@@ -79,7 +75,7 @@ function EstructuraCarrito() {
       " con un valor de " +
       producto.precio,
 
-    duration: 2000,
+    duration: 500,
     style: {
       background: "#00d1b2",
     },
@@ -92,12 +88,6 @@ function  total() {
     });
     let precio = parseFloat(miItem[0].precio);
     return total + precio;
-  }, 0);
+  }, 0).toFixed(3);
 }
 
-
-function limpiarHTML() {
-  while (contenedorCarrito.firstChild) {
-    contenedorCarrito.removeChild(contenedorCarrito.firstChild);
-  }
-}
